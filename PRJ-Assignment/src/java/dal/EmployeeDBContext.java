@@ -4,7 +4,7 @@
  */
 package dal;
 
-import model.auth.Employee;
+import model.Employee;
 import dal.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.auth.Employee;
 
 /**
  *

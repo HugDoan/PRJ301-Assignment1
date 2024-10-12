@@ -13,21 +13,7 @@
     </head>
     <body>
         <jsp:include page="../master/shortprofile.jsp"></jsp:include> 
-        
-            <table border = "1px">
-                <tr>
-                    <td>Product ID</td>
-                    <td>Product Name</td>
-                    <td>Quantity(unit: piece)</td>
-                </tr>
-            <c:forEach items="${requestScope.pl}" var="p">
-                <tr>
-                    <td>${p.pId}</td>
-                    <td>${p.pName}</td>
-                    <td>${p.quantity}</td>
-                </tr>
-            </c:forEach>
-        </table>
+
 
         <table border = "1px">
             <tr>

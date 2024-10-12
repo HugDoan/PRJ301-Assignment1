@@ -14,10 +14,6 @@ import model.auth.Feature;
 import model.auth.Role;
 import model.auth.User;
 
-/**
- *
- * @author sonnt-local
- */
 public abstract class BaseRBACController extends BaseRequiredAuthenticationController {
     
     private void grantAccessControls(User account, HttpServletRequest req)

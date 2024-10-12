@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Admin
+ * @author sonnt-local
  */
-public class Feature {
-        private int id;
+public class Role {
+    private int id;
     private String name;
-    private String url;
-    private ArrayList<Role> roles = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
+    private ArrayList<Feature> features = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -32,21 +32,20 @@ public class Feature {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
     }
 
-    public ArrayList<Role> getRoles() {
-        return roles;
+    public ArrayList<Feature> getFeatures() {
+        return features;
     }
 
-    public void setRoles(ArrayList<Role> roles) {
-        this.roles = roles;
+    public void setFeatures(ArrayList<Feature> features) {
+        this.features = features;
     }
-    
     
 }

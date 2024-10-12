@@ -8,13 +8,22 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Admin
+ * @author sonnt-local
  */
 public class User {
-        private String username;
+    private String username;
     private String password;
     private String displayname;
     ArrayList<Role> roles = new ArrayList<>();
+
+    public ArrayList<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<Role> roles) {
+        this.roles = roles;
+    }
+    
 
     public String getUsername() {
         return username;
@@ -38,14 +47,6 @@ public class User {
 
     public void setDisplayname(String displayname) {
         this.displayname = displayname;
-    }
-
-    public ArrayList<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(ArrayList<Role> roles) {
-        this.roles = roles;
     }
     
 }

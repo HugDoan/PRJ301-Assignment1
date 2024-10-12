@@ -11,17 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import model.auth.Employee;
+import model.Employee;
 import dal.EmployeeDBContext;
 import controller.auth.BaseRBACController;
-
-/**
- *
- * @author sonnt-local
- */
 import model.auth.User;/**
  *
- * @author sonnt-local
+ * @author admin
  */
 public class EmployeeListController extends BaseRBACController{
 
