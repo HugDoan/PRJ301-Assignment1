@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package model.auth;
 
 /**
  *
@@ -12,7 +12,7 @@ public class Employee {
 
     private String employeeID;
     private String employeeName;
-    private String salaryLevelID;
+    
 
     public String getEmployeeID() {
         return employeeID;
@@ -30,12 +30,6 @@ public class Employee {
         this.employeeName = employeeName;
     }
 
-    public String getSalaryLevelID() {
-        return salaryLevelID;
-    }
 
-    public void setSalaryLevelID(String salaryLevelID) {
-        this.salaryLevelID = salaryLevelID;
-    }
     
 }

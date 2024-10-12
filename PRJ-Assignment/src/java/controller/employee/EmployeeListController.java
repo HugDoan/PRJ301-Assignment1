@@ -11,33 +11,38 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import model.Employee;
-import model.EmployeeDBContext;
+import model.auth.Employee;
+import dal.EmployeeDBContext;
+import controller.auth.BaseRBACController;
 
 /**
  *
  * @author sonnt-local
  */
-public class EmployeeListController extends HttpServlet{
+import model.auth.User;/**
+ *
+ * @author sonnt-local
+ */
+public class EmployeeListController extends BaseRBACController{
 
-    protected void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest req, HttpServletResponse resp, User account) throws ServletException, IOException {
         EmployeeDBContext db = new EmployeeDBContext();
         ArrayList<Employee> emps = db.list();
         req.setAttribute("emps", emps);
         req.getRequestDispatcher("../view/employee/list.jsp").forward(req, resp);
     
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }
     
+    }
+
+    @Override
+    protected void doAuthorizedGet(HttpServletRequest req, HttpServletResponse resp, User account) throws ServletException, IOException {
+        processRequest(req, resp, account);
+    }
+
+    @Override
+    protected void doAuthorizedPost(HttpServletRequest req, HttpServletResponse resp, User account) throws ServletException, IOException {
+        processRequest(req, resp, account);
+    }
     
     
 }
