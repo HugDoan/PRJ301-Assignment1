@@ -4,31 +4,112 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Admin
  */
 public class Employee {
 
-    private String employeeID;
-    private String employeeName;
+    private int id;
+    private String name;
+    private Department did;
+    private String phonenumber;
+    private String address;
+    private Salary sid;
+    private boolean gender;
+    private Date dob;
+    private Department dept;
+    private Salary sals;
     
 
-    public String getEmployeeID() {
-        return employeeID;
+    public Department getDept() {
+        return dept;
     }
 
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
+    public void setDept(Department dept) {
+        this.dept = dept;
     }
 
-    public String getEmployeeName() {
-        return employeeName;
+    public Salary getSals() {
+        return sals;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
+    public void setSals(Salary sals) {
+        this.sals = sals;
     }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Department getDid() {
+        return did;
+    }
+
+    public void setDid(Department did) {
+        this.did = did;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Salary getSid() {
+        return sid;
+    }
+
+    public void setSid(Salary sid) {
+        this.sid = sid;
+    }
+    
+    
+    
+
 
 
     

@@ -28,37 +28,33 @@ public class UserDBContext extends DBContext<User> {
                     + "	INNER JOIN RoleFeature rf ON rf.rid = r.rid\n"
                     + "	INNER JOIN Feature f ON f.fid = rf.fid\n"
                     + "WHERE u.username = ? ";
-            
+
             stm = connection.prepareStatement(sql);
             stm.setString(1, username);
             ResultSet rs = stm.executeQuery();
             Role crole = new Role();
             crole.setId(-1);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 int rid = rs.getInt("rid");
-                if(rid != crole.getId())
-                {
+                if (rid != crole.getId()) {
                     crole = new Role();
                     crole.setId(rid);
                     crole.setName(rs.getString("rname"));
                     roles.add(crole);
                 }
-                
+
                 Feature f = new Feature();
                 f.setId(rs.getInt("fid"));
                 f.setName(rs.getString("fname"));
                 f.setUrl(rs.getString("url"));
-                
+
                 f.setRoles(roles);
                 crole.getFeatures().add(f);
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UserDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
+        } finally {
             try {
                 stm.close();
                 connection.close();
@@ -73,7 +69,11 @@ public class UserDBContext extends DBContext<User> {
         User user = null;
         PreparedStatement stm = null;
         try {
-            String sql = "SELECT [username],[password],[displayname] FROM [User]\n"
+            String sql = "SELECT [username]\n"
+                    + "      ,[password]\n"
+                    + "      ,[active]\n"
+                    + "      ,[email]\n"
+                    + "  FROM [Users]"
                     + "WHERE [username] = ? AND [password] = ?";
             stm = connection.prepareStatement(sql);
             stm.setString(1, username);
@@ -81,8 +81,14 @@ public class UserDBContext extends DBContext<User> {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 user = new User();
-                user.setDisplayname(rs.getString("displayname"));
-                user.setUsername(username);
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setActive(rs.getBoolean("active"));
+                user.setEmail(rs.getString("email"));
+
+                // Populate roles for the user
+                ArrayList<Role> roles = getRoles(username);
+                user.setRoles(roles);
             }
 
         } catch (SQLException ex) {

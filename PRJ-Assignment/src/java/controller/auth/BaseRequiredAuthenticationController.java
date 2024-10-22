@@ -29,6 +29,7 @@ public abstract class BaseRequiredAuthenticationController extends HttpServlet {
             User user = (User) req.getSession().getAttribute("account");
             doPost(req, resp, user);
         } else {
+            
             resp.getWriter().println("access denied!");
         }
     }
@@ -39,7 +40,8 @@ public abstract class BaseRequiredAuthenticationController extends HttpServlet {
             User user = (User) req.getSession().getAttribute("account");
             doGet(req, resp, user);
         } else {
-            resp.getWriter().println("access denied!");
+            
+               resp.getWriter().println("access denied!");
         }
     }
 

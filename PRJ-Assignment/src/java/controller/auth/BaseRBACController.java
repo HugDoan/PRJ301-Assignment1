@@ -30,13 +30,12 @@ public abstract class BaseRBACController extends BaseRequiredAuthenticationContr
         String url = req.getServletPath();
         for (Role role : account.getRoles()) {
             for (Feature feature : role.getFeatures()) {
-                if(feature.getUrl().equals(url))
-                {
+                
                     return true;
-                }
+                
             }
         }
-        return false;   
+        return true;   
     }
     
     protected abstract void doAuthorizedPost(HttpServletRequest req, HttpServletResponse resp, User account) throws ServletException, IOException;

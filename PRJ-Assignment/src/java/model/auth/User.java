@@ -13,7 +13,8 @@ import java.util.ArrayList;
 public class User {
     private String username;
     private String password;
-    private String displayname;
+    private boolean active;
+    private String email;
     ArrayList<Role> roles = new ArrayList<>();
 
     public ArrayList<Role> getRoles() {
@@ -41,12 +42,20 @@ public class User {
         this.password = password;
     }
 
-    public String getDisplayname() {
-        return displayname;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setDisplayname(String displayname) {
-        this.displayname = displayname;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
 }
