@@ -21,22 +21,15 @@
             </tr>
             <c:forEach var="planHeader" items="${productionPlans}">
                 <tr>
-                    <!-- ProductionPlanHeader ID -->
-                    <td>${planHeader.id}</td>
                     
-                    <!-- Link to Production Plan details page using the ProductionPlan name -->
+                    <td>${planHeader.plan.id}</td>
                     <td><a href="details.jsp?pid=${planHeader.plan.id}">${planHeader.plan.name}</a></td>
-                    
-                    <!-- Start and End dates from ProductionPlan -->
                     <td>${planHeader.plan.start}</td>
                     <td>${planHeader.plan.end}</td>
-                    
-                    <!-- Quantity and Estimated Effort from ProductionPlanHeader -->
                     <td>${planHeader.quantity}</td>
                     <td>${planHeader.product.name}</td>
                     <td>${planHeader.estimatedeffort}</td>
-                    
-                    <!-- Delete button with form submission -->
+
                     <td>
                         <form action="deletePlan" method="post" style="display:inline;">
                             <input type="hidden" name="planId" value="${planHeader.id}">
