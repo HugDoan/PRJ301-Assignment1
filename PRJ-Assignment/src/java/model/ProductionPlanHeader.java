@@ -14,6 +14,8 @@ public class ProductionPlanHeader {
     private Product product;
     private int quantity;
     private float estimatedeffort;
+ 
+    
 
     public int getId() {
         return id;

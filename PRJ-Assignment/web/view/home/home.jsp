@@ -9,7 +9,7 @@
 
 <%
     // Kiểm tra xem người dùng đã đăng nhập hay chưa
-    model.auth.Users account = (model.auth.Users) session.getAttribute("account");
+    model.auth.User account = (model.auth.User) session.getAttribute("account");
     if (account == null) {
         // Nếu chưa đăng nhập, chuyển hướng về trang login
         response.sendRedirect("login.html");

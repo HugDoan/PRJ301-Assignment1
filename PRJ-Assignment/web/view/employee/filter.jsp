@@ -55,7 +55,14 @@
                 <tr>
                     <td>${e.id}</td>
                     <td>${e.name}</td>
-                    <td>${e.gender}</td>
+                    <td><c:choose>
+                            <c:when test="${e.gender == true}">
+                                Male
+                            </c:when>
+                            <c:when test="${e.gender == false}">
+                                Female
+                            </c:when>
+                        </c:choose></td>
                     <td>${e.dob}</td>
                     <td>${e.address}</td>
                     <td>${e.phonenumber}</td>

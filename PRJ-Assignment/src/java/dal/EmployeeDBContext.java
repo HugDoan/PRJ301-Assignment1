@@ -8,6 +8,7 @@ import model.Employee;
 import model.Department;
 import model.Salary;
 import dal.DBContext;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -136,12 +137,137 @@ public class EmployeeDBContext extends DBContext<Employee> {
 
     @Override
     public void insert(Employee model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            connection.setAutoCommit(false);
+            String sql_insert_employee = "INSERT INTO [Employees]\n"
+                    + "           ([ename]\n"
+                    + "           ,[did]\n"
+                    + "           ,[phonenumber]\n"
+                    + "           ,[address]\n"
+                    + "           ,[sid]\n"
+                    + "           ,[gender]\n"
+                    + "           ,[dob]\n"
+                    + "           ,[createdby])\n"
+                    + "     VALUES\n"
+                    + "           (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement stm_insert_employee = connection.prepareStatement(sql_insert_employee);
+            stm_insert_employee.setString(1, model.getName());
+            stm_insert_employee.setInt(2, model.getDept().getId());
+            stm_insert_employee.setString(3, model.getPhonenumber());
+            stm_insert_employee.setString(4, model.getAddress());
+            stm_insert_employee.setInt(5, model.getSals().getId());
+            stm_insert_employee.setBoolean(6, model.isGender());
+            stm_insert_employee.setDate(7, model.getDob());
+            stm_insert_employee.setString(8, model.getCreatedby().getUsername());
+            stm_insert_employee.executeUpdate();
+
+            String sql_select_employee = "SELECT @@IDENTITY as eid";
+            PreparedStatement stm_select_salary = connection.prepareStatement(sql_select_employee);
+            ResultSet rs = stm_select_salary.executeQuery();
+            if (rs.next()) {
+                model.setId(rs.getInt("eid"));
+            }
+
+            String sql_insert_salary = "INSERT INTO [Salaries]\n"
+                    + "           ([slevel]\n"
+                    + "           ,[salary])\n"
+                    + "     VALUES\n"
+                    + "           (?, ?)";
+            PreparedStatement stm_insert_salary = connection.prepareStatement(sql_insert_salary);
+            Salary salary = model.getSals(); 
+
+            stm_insert_salary.setString(1, salary.getLevel());
+            stm_insert_salary.setBigDecimal(2, salary.getSalary());
+            stm_insert_salary.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
     public void update(Employee model) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            String sql_update_employee = "UPDATE [Employees]\n"
+            + "   SET [ename] = ?\n"
+            + "      ,[gender] = ?\n"
+            + "      ,[dob] = ?\n"
+            + "      ,[address] = ?\n"
+            + "      ,[did] = ?\n"
+            + "      ,[updatedby] = ?\n"
+            + "      ,[updatedtime] = GETDATE()\n"
+            + " WHERE eid = ?";
+
+    String sql_update_salary = "UPDATE [Salaries]\n"
+            + "   SET [slevel] = ?\n"
+            + "      ,[salary] = ?\n"
+            + " WHERE sid = ?";  // Update based on salary ID (sid)
+
+    PreparedStatement stm_update_employee = null;
+    PreparedStatement stm_update_salary = null;
+
+    try {
+        // Start a transaction
+        connection.setAutoCommit(false);
+
+        // Update Employee table
+        stm_update_employee = connection.prepareStatement(sql_update_employee);
+        stm_update_employee.setString(1, model.getName());
+        stm_update_employee.setBoolean(2, model.isGender());
+        stm_update_employee.setDate(3, model.getDob());
+        stm_update_employee.setString(4, model.getAddress());
+        stm_update_employee.setInt(5, model.getDept().getId());
+        stm_update_employee.setString(6, model.getUpdatedby().getUsername());
+        stm_update_employee.setInt(7, model.getId());
+        stm_update_employee.executeUpdate();
+
+        // Update Salaries table
+        stm_update_salary = connection.prepareStatement(sql_update_salary);
+            Salary salary = model.getSals(); 
+
+            stm_update_salary.setString(1, salary.getLevel());
+            stm_update_salary.setBigDecimal(2, salary.getSalary());
+            stm_update_salary.executeUpdate();
+
+        // Commit the transaction
+        connection.commit();
+
+    } catch (SQLException ex) {
+        Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            // Rollback the transaction in case of failure
+            connection.rollback();
+        } catch (SQLException ex1) {
+            Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+        }
+    } finally {
+        try {
+            if (stm_update_employee != null) stm_update_employee.close();
+            if (stm_update_salary != null) stm_update_salary.close();
+            connection.setAutoCommit(true);
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     }
 
     @Override

@@ -5,6 +5,8 @@
 package model;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import model.auth.User;
 
 /**
  *
@@ -22,8 +24,43 @@ public class Employee {
     private Date dob;
     private Department dept;
     private Salary sals;
-    
+    private User createdby;
+    private User updatedby;
+    private java.util.Date updatedtime;
+    private ArrayList<Salary> salaries = new ArrayList<>();
 
+    public ArrayList<Salary> getSalaries() {
+        return salaries;
+    }
+
+    public void setSalaries(ArrayList<Salary> salaries) {
+        this.salaries = salaries;
+    }
+    
+    public User getCreatedby() {
+        return createdby;
+    }
+
+    public void setCreatedby(User createdby) {
+        this.createdby = createdby;
+    }
+
+    public User getUpdatedby() {
+        return updatedby;
+    }
+
+    public void setUpdatedby(User updatedby) {
+        this.updatedby = updatedby;
+    }
+
+    public java.util.Date getUpdatedtime() {
+        return updatedtime;
+    }
+
+    public void setUpdatedtime(java.util.Date updatedtime) {
+        this.updatedtime = updatedtime;
+    }
+    
     public Department getDept() {
         return dept;
     }

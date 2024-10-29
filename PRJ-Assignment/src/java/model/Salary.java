@@ -5,6 +5,7 @@
 package model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +15,8 @@ public class Salary {
     private int id;
     private String level;
     private BigDecimal salary;
+
+    
 
     public int getId() {
         return id;

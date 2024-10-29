@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dal;
 
 import dal.DBContext;
@@ -11,11 +7,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.ProductionPlan;
 import java.sql.*;
+import model.Department;
+import model.Employee;
 import model.ProductionPlanHeader;
+import model.Product;
+import model.ProductionPlan;
+import model.Salary;
 
 /**
  *
- * @author sonnt-local
+ * @author
  */
 public class ProductionPlanDBContext extends DBContext<ProductionPlan> {
 
@@ -33,22 +34,21 @@ public class ProductionPlanDBContext extends DBContext<ProductionPlan> {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
-            
+
             PreparedStatement stm_insert_plan = connection.prepareStatement(sql_insert_plan);
             stm_insert_plan.setString(1, model.getName());
             stm_insert_plan.setDate(2, model.getStart());
             stm_insert_plan.setDate(3, model.getEnd());
             stm_insert_plan.setInt(4, model.getDept().getId());
             stm_insert_plan.executeUpdate();
-            
+
             String sql_select_plan = "SELECT @@IDENTITY as plid";
             PreparedStatement stm_select_plan = connection.prepareStatement(sql_select_plan);
             ResultSet rs = stm_select_plan.executeQuery();
-            if(rs.next())
-            {
+            if (rs.next()) {
                 model.setId(rs.getInt("plid"));
             }
-            
+
             String sql_insert_header = "INSERT INTO [PlanHeaders]\n"
                     + "           ([plid]\n"
                     + "           ,[pid]\n"
@@ -59,7 +59,7 @@ public class ProductionPlanDBContext extends DBContext<ProductionPlan> {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
-            
+
             for (ProductionPlanHeader header : model.getHeaders()) {
                 PreparedStatement stm_insert_header = connection.prepareStatement(sql_insert_header);
                 stm_insert_header.setInt(1, model.getId());
@@ -105,6 +105,7 @@ public class ProductionPlanDBContext extends DBContext<ProductionPlan> {
     @Override
     public ArrayList<ProductionPlan> list() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 
     @Override
