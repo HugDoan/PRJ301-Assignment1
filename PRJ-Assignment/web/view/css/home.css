@@ -1,66 +1,101 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
-*/
-/* 
-    Created on : Nov 3, 2024, 11:59:20 PM
-    Author     : Admin
-*/
-
-/* Style cho header */
-        header {
-            background-color: #f2f2f2;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-        /* Style cho menu */
-        nav {
-            margin: 20px 0;
+header {
+    background-color: #007bff; /* Updated color */
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav {
+    background-color: #333;
+    padding: 10px 0;
     text-align: center;
 }
 
-        nav ul {
-            list-style-type: none;
-            padding: 0;
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
+nav ul li {
+    display: inline;
+    margin: 0 15px;
 }
 
-        nav ul li a {
+nav ul li a {
+    color: #ffffff;
     text-decoration: none;
-            font-size: 18px;
-            color: #333;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-        nav ul li a:hover {
-            color: #007BFF;
+nav ul li a:hover {
+    color: #007bff; /* Updated color */
 }
 
-        /* Style cho phần hiển thị bài báo */
-        .articles {
-            margin: 20px auto;
-            width: 80%;
-            border: 1px solid #ddd;
-            padding: 20px;
+.articles {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-        .article {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 15px;
+.article {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 0;
 }
 
-        .article h3 {
-            font-size: 22px;
-            color: #333;
+.article:last-child {
+    border-bottom: none;
 }
 
-        .article p {
-            font-size: 16px;
-            color: #666;
+.article h3 {
+    color: #007bff; /* Updated color */
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.article p {
+    color: #555;
+    font-size: 14px;
+    margin: 5px 0 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        font-size: 20px;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .articles {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .article h3 {
+        font-size: 18px;
+    }
+
+    .article p {
+        font-size: 13px;
+    }
 }

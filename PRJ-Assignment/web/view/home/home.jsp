@@ -1,60 +1,179 @@
-<%-- 
-    Document   : home
-    Created on : Oct 20, 2024, 8:32:01 PM
-    Author     : Admin
---%>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/css/home.css">
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page session="true" %>
-
-<%
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa
-    model.auth.User account = (model.auth.User) session.getAttribute("account");
-    if (account == null) {
-        // Nếu chưa đăng nhập, chuyển hướng về trang login
-        response.sendRedirect("login.html");
-        return;
-    }
-%>
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <%@ page contentType="text/html; charset=UTF-8" %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ</title>
+    <title>Trang chủ - Quản lý</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/css/home.css">
     <style>
-        
+        /* Body and General Layout */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #28a745;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Navigation Styling */
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #3c4e8a;
+        }
+
+        /* Main Content Area */
+        .content {
+            max-width: 1100px;
+            margin: 120px auto 0;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            flex: 1 1 300px;
+            min-width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #28a745;
+            font-size: 20px;
+            margin: 0 0 10px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0 10px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            background-color: #28a745;
+            color: #ffffff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2d3c69;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+
+            .card {
+                min-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header trống -->
-    <header>
-        <h1>Trang chủ</h1>
-    </header>
+<header>
+    <h1>Home</h1>
+</header>
 
-    <!-- Thanh menu với các mục ProductionPlan, Employee, Attendant -->
-    <nav>
-        <ul>
-            <li><a href="/PRJ-Assignment/productionplan/list">ProductionPlan</a></li>
-            <li><a href="/PRJ-Assignment/employee/filter">Employee</a></li>
-            <li><a href="#">Attendant</a></li>
-        </ul>
-    </nav>
+<nav>
 
-    <!-- Khung hiển thị các bài báo -->
-    <div class="articles">
-        <div class="article">
-            <h3>Tiêu đề bài báo 1</h3>
-            <p>Nội dung tóm tắt của bài báo 1 sẽ được hiển thị ở đây...</p>
+</nav>
+
+<div class="content">
+    <!-- Card for Employee List -->
+    <div class="card">
+        <h3>List Employee</h3>
+        <p>Search employee information easily.</p>
+        <br>
+        <div class="btn-group">
+            
+            <button class="btn"><a href="/PRJ-Assignment/employee/filter">View All</a></button>
         </div>
-        <div class="article">
-            <h3>Tiêu đề bài báo 2</h3>
-            <p>Nội dung tóm tắt của bài báo 2 sẽ được hiển thị ở đây...</p>
-        </div>
-        <!-- Bạn có thể thêm nhiều bài báo hơn tại đây -->
     </div>
+    
+    <!-- Card for Production Plan -->
+    <div class="card">
+        <h3>Production Plan</h3>
+        <p>Manage employee salaries with options for updates and detailed views.</p>
+        <div class="btn-group">
+            <button class="btn"><a href="/PRJ-Assignment/productionplan/create">Create</a></button>
+            <button class="btn"><a href="/PRJ-Assignment/productionplan/list">View Production Plans</a></button>
+        </div>
+    </div>
+    
+    <!-- Card for Attendance -->
+    <div class="card">
+        <h3>Attendance</h3>
+        <p>Manage employee attendance records and monitor company attendance status.</p>
+        <div class="btn-group">
+            <button class="btn">View Report</button>
+            <button class="btn">Update Attendance</</button>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

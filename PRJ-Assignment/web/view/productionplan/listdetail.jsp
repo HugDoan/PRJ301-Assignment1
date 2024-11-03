@@ -13,14 +13,15 @@
         <title>JSP Page</title>
 
     </head>
-    <body>
+<body>
     <div class="container">
         <h1>${requestScope.plan.name} Detail</h1>
         <form action="detail" method="POST">
             <table border="1px">
                 <thead>
                     <tr>
-                        <th class="sticky-header" colspan="2">Product</th>
+                        <th class="sticky-header">Date</th>
+                        <th class="sticky-header">Shift</th>
                         <c:forEach items="${requestScope.plan.headers}" var="h">
                             <th class="sticky-header">${h.product.name}</th>
                         </c:forEach>
@@ -65,6 +66,7 @@
         </form>
     </div>
 </body>
+
 
 </html>
 
