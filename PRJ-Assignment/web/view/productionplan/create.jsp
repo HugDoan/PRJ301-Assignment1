@@ -3,7 +3,7 @@
     Created on : Oct 16, 2024, 11:19:35 AM
     Author     : 
 --%>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/css/create.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
@@ -12,31 +12,43 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
+<body>
+    <div class="container">
+        <h1>Create Production Plan</h1>
         <form action="create" method="POST">
-            Plan Name: <input type="text" name="name"/> <br/>
-            From: <input type="date" name="from"/> To: <input type="date" name="to"/> <br/>
-            Workshop: <select name="did">
+            <label>Plan Name:</label>
+            <input type="text" name="name" required /> 
+
+            <label>From:</label>
+            <input type="date" name="from" required />
+
+            <label>To:</label>
+            <input type="date" name="to" required />
+
+            <label>Workshop:</label>
+            <select name="did" required>
                 <c:forEach items="${requestScope.depts}" var="d">
                     <option value="${d.id}">${d.name}</option>
                 </c:forEach>
             </select>
-            <br/>
-            <table border="1px">
+
+            <table>
                 <tr>
-                    <td>Product</td>
-                    <td>Quantity</td>
-                    <td>Estimated Effort</td>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Estimated Effort</th>
                 </tr>
                 <c:forEach items="${requestScope.products}" var="p">
-                <tr>
-                    <td>${p.name}<input type="hidden" name="pid" value="${p.id}"></td>
-                    <td><input type="text" name="quantity${p.id}"/></td>
-                    <td><input type="text" name="effort${p.id}"/></td>
-                </tr>    
+                    <tr>
+                        <td>${p.name}<input type="hidden" name="pid" value="${p.id}"></td>
+                        <td><input type="text" name="quantity${p.id}" required /></td>
+                        <td><input type="text" name="effort${p.id}" required /></td>
+                    </tr>    
                 </c:forEach>
             </table>
-            <input type="submit" value="Save"/>
+
+            <input type="submit" value="Save" />
         </form>
-    </body>
+    </div>
+</body>
 </html>

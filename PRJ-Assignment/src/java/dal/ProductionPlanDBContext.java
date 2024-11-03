@@ -163,7 +163,7 @@ public class ProductionPlanDBContext extends DBContext<ProductionPlan> {
 
     @Override
     public ProductionPlan get(int id) {
-        PreparedStatement stm = null;
+        PreparedStatement stm = null;    
         String sql = "select p.plid,pname, plname,startdate,enddate,did,h.phid,h.pid,quantity,estimatedeffort\n"
                 + "from Plans p join PlanHeaders h on p.plid=h.plid\n"
                 + "join Products pr on pr.pid=h.pid\n"

@@ -27,8 +27,10 @@ public class ProductionPlanDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         int plid = Integer.parseInt(request.getParameter("plid"));
         ProductionPlan plan = new ProductionPlan();
+        
         ProductionPlanDBContext dbPlan = new ProductionPlanDBContext();
         plan = dbPlan.get(plid);
         ArrayList<Date> datePlan = new ArrayList<>();

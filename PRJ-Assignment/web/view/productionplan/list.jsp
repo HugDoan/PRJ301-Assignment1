@@ -3,52 +3,56 @@
     Created on : Nov 3, 2024, 9:13:22 PM
     Author     : Admin
 --%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/css/plist.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Production Plan List</title>
-    </head>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Production Plan List</title>
+</head>
 
-    <body>
-        <h1>Danh sách Kế hoạch Sản xuất</h1>
+<body>
+    <div class="container">
+        <h1>Production Plan List</h1>
+        <a href="/PRJ-Assignment/productionplan/create" class="create-button">Create</a>
         <table border="1px">
             <tr>
-                <td style="font-weight: bold">ID</td>
-                <td style="font-weight: bold">Tên kế hoạch</td>
-                <td style="font-weight: bold">Ngày bắt đầu</td>
-                <td style="font-weight: bold">Ngày kết thúc</td>
-                <td style="font-weight: bold">Số lượng</td>
-                <td style="font-weight: bold">Tên sản phẩm</td>
-                <td style="font-weight: bold">Dự toán</td>
+                <th class="table-header"><span class="label">ID</span></th>
+                <th class="table-header"><span class="label">Plan Name</span></th>
+                <th class="table-header"><span class="label">Start Date</span></th>
+                <th class="table-header"><span class="label">End Date</span></th>
+                <th class="table-header"><span class="label">Quantity</span></th>
+                <th class="table-header"><span class="label">Product Name</span></th>
+                <th class="table-header"><span class="label">Estimated Effort</span></th>
             </tr>
 
-            <c:forEach items="${requestScope.plans}" var="p">
-                <tr class="even">
-                    <td rowspan="${p.headers.size()}">${p.id}</td>
-                    <td rowspan="${p.headers.size()}"><a href="detail?plid=${p.id}">${p.name}</a></td>
-                    <td rowspan="${p.headers.size()}">${p.start}</td>
-                    <td rowspan="${p.headers.size()}">${p.end}</td>
-                    <td>${p.headers[0].quantity}<br/></td>
-                    <td>${p.headers[0].product.name}<br/></td>
-                    <td>${p.headers[0].estimatedeffort}<br/></td>
+            <!-- Initialize a counter variable for the ID -->
+            <c:set var="counter" value="1" scope="page" />
 
-                </tr>
-                <c:forEach var="i" begin="1" end="${p.headers.size()-1}">
+            <c:forEach items="${requestScope.plans}" var="p">
+                <c:forEach var="i" begin="0" end="${p.headers.size()-1}">
                     <tr>
-                        <td>${p.headers[i].quantity}<br/></td>
-                        <td>${p.headers[i].product.name}<br/></td>
-                        <td>${p.headers[i].estimatedeffort}<br/></td>
+                        <c:if test="${i == 0}">
+                            <!-- Use the counter variable for ID and increment it after each plan -->
+                            <td rowspan="${p.headers.size()}">${counter}</td>
+                            <td rowspan="${p.headers.size()}"><a href="detail?plid=${p.id}">${p.name}</a></td>
+                            <td rowspan="${p.headers.size()}">${p.start}</td>
+                            <td rowspan="${p.headers.size()}">${p.end}</td>
+                            <!-- Increment the counter only once per plan -->
+                            <c:set var="counter" value="${counter + 1}" />
+                        </c:if>
+                        <td class="quantity">${p.headers[i].quantity}</td>
+                        <td class="product">${p.headers[i].product.name}</td>
+                        <td class="estimated-effort">${p.headers[i].estimatedeffort}</td>
                     </tr>
                 </c:forEach>
             </c:forEach>
         </table>
-    </body>
-
-
-
-
+    </div>
+</body>
 </html>
+
+

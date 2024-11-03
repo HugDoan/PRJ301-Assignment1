@@ -1,6 +1,6 @@
-
 package controller.productionplan;
 
+import controller.auth.BaseRBACController;
 import dal.DepartmentDBContext;
 import dal.EmployeeDBContext;
 import java.io.IOException;
@@ -14,34 +14,27 @@ import dal.ProductionPlanHeaderDBContext;
 import dal.ProductionPlanDBContext;
 import model.ProductionPlanHeader;
 import model.ProductionPlan;
+import model.auth.User;
 
+public class ProductionPlanListController extends BaseRBACController {
 
-public class ProductionPlanListController extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, User account)
             throws ServletException, IOException {
-        ProductionPlanDBContext dbPlan= new ProductionPlanDBContext();
-        ArrayList<ProductionPlan> plans= new ArrayList<>();
-        plans= dbPlan.list();
+        ProductionPlanDBContext dbPlan = new ProductionPlanDBContext();
+        ArrayList<ProductionPlan> plans = new ArrayList<>();
+        plans = dbPlan.list();
         request.setAttribute("plans", plans);
         request.getRequestDispatcher("../view/productionplan/list.jsp").forward(request, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doAuthorizedPost(HttpServletRequest req, HttpServletResponse resp, User account) throws ServletException, IOException {
+        processRequest(req, resp, account);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
+    protected void doAuthorizedGet(HttpServletRequest req, HttpServletResponse resp, User account) throws ServletException, IOException {
+        processRequest(req, resp, account);
     }
 
 }

@@ -3,7 +3,7 @@
     Created on : Oct 20, 2024, 8:32:01 PM
     Author     : Admin
 --%>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/view/css/home.css">
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session="true" %>
 
@@ -24,63 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang chủ</title>
     <style>
-        /* Style cho header */
-        header {
-            background-color: #f2f2f2;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-        }
-
-        /* Style cho menu */
-        nav {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            font-size: 18px;
-            color: #333;
-        }
-
-        nav ul li a:hover {
-            color: #007BFF;
-        }
-
-        /* Style cho phần hiển thị bài báo */
-        .articles {
-            margin: 20px auto;
-            width: 80%;
-            border: 1px solid #ddd;
-            padding: 20px;
-        }
-
-        .article {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 15px;
-        }
-
-        .article h3 {
-            font-size: 22px;
-            color: #333;
-        }
-
-        .article p {
-            font-size: 16px;
-            color: #666;
-        }
+        
     </style>
 </head>
 <body>
