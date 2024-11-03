@@ -93,7 +93,7 @@
     <!-- Thanh menu với các mục ProductionPlan, Employee, Attendant -->
     <nav>
         <ul>
-            <li><a href="#">ProductionPlan</a></li>
+            <li><a href="/PRJ-Assignment/productionplan/list">ProductionPlan</a></li>
             <li><a href="/PRJ-Assignment/employee/filter">Employee</a></li>
             <li><a href="#">Attendant</a></li>
         </ul>

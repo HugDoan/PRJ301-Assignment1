@@ -162,9 +162,53 @@ public class ProductionPlanDBContext extends DBContext<ProductionPlan> {
     }
 
     @Override
-    public ProductionPlan get(int id
-    ) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public ProductionPlan get(int id) {
+        PreparedStatement stm = null;
+        String sql = "select p.plid,pname, plname,startdate,enddate,did,h.phid,h.pid,quantity,estimatedeffort\n"
+                + "from Plans p join PlanHeaders h on p.plid=h.plid\n"
+                + "join Products pr on pr.pid=h.pid\n"
+                + "where p.plid=?";
+        ArrayList<ProductionPlanHeader> headers = new ArrayList<>();
+        ProductionPlan cPlan = new ProductionPlan();
+        try {
 
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+
+            cPlan.setId(-1);
+            while (rs.next()) {
+                int plid = rs.getInt("plid");
+                if (plid != cPlan.getId()) {
+                    cPlan = new ProductionPlan();
+                    cPlan.setId(plid);
+                    cPlan.setName(rs.getString("plname"));
+                    cPlan.setStart(rs.getDate("startdate"));
+                    cPlan.setEnd(rs.getDate("enddate"));
+
+                    Department d = new Department();
+                    d.setId(rs.getInt("did"));
+                    cPlan.setDept(d);
+                    headers = new ArrayList<>();
+
+                }
+
+                Product p = new Product();
+                p.setId(rs.getInt("pid"));
+                p.setName(rs.getString("pname"));
+
+                ProductionPlanHeader h = new ProductionPlanHeader();
+                h.setProduct(p);
+                h.setId(rs.getInt("phid"));
+                h.setQuantity(rs.getInt("quantity"));
+                h.setEstimatedeffort(rs.getFloat("estimatedeffort"));
+                headers.add(h);
+                cPlan.setHeaders(headers);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductionPlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cPlan;
+    }
 }

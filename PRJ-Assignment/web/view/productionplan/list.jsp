@@ -1,3 +1,8 @@
+<%-- 
+    Document   : listdetail
+    Created on : Nov 3, 2024, 9:13:22 PM
+    Author     : Admin
+--%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
