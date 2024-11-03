@@ -82,16 +82,16 @@ public class ProductionPlanHeaderDBContext extends DBContext<ProductionPlanHeade
             }
 
         } catch (SQLException ex) {
-             Logger.getLogger(ProductionPlanHeaderDBContext.class.getName())
-                     .log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductionPlanHeaderDBContext.class.getName())
+                    .log(Level.SEVERE, null, ex);
         } finally {
             try {
                 stm.close();
                 connection.close();
 
             } catch (SQLException ex) {
-                 Logger.getLogger(ProductionPlanHeaderDBContext.class.getName())
-                         .log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductionPlanHeaderDBContext.class.getName())
+                        .log(Level.SEVERE, null, ex);
             }
         }
         return pplist;

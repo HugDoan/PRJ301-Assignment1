@@ -4,19 +4,33 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Admin
  */
 public class ProductionPlanHeader {
+
     private int id;
     private ProductionPlan plan;
     private Product product;
     private int quantity;
     private float estimatedeffort;
- 
     
 
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+
+    
     public int getId() {
         return id;
     }
@@ -31,14 +45,6 @@ public class ProductionPlanHeader {
 
     public void setPlan(ProductionPlan plan) {
         this.plan = plan;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 
     public int getQuantity() {
@@ -56,6 +62,5 @@ public class ProductionPlanHeader {
     public void setEstimatedeffort(float estimatedeffort) {
         this.estimatedeffort = estimatedeffort;
     }
-    
-    
+
 }

@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package controller.productionplan;
 
+import dal.DepartmentDBContext;
 import dal.EmployeeDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,26 +11,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import dal.ProductionPlanHeaderDBContext;
+import dal.ProductionPlanDBContext;
 import model.ProductionPlanHeader;
+import model.ProductionPlan;
 
-/**
- *
- * @author Admin
- */
+
 public class ProductionPlanListController extends HttpServlet {
-
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        ProductionPlanHeaderDBContext db = new ProductionPlanHeaderDBContext();
-        ArrayList<ProductionPlanHeader> productionPlans = db.list();
-        request.setAttribute("productionPlans", productionPlans);
-
+        ProductionPlanDBContext dbPlan= new ProductionPlanDBContext();
+        ArrayList<ProductionPlan> plans= new ArrayList<>();
+        plans= dbPlan.list();
+        request.setAttribute("plans", plans);
         request.getRequestDispatcher("../view/productionplan/list.jsp").forward(request, response);
     }
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

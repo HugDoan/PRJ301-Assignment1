@@ -18,6 +18,16 @@ public class ProductionPlan {
     private Date end;
     private Department dept;
     private ArrayList<ProductionPlanHeader> headers = new ArrayList<>();
+    private ArrayList<Product> products = new ArrayList<>();
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+    
     
 
     public int getId() {

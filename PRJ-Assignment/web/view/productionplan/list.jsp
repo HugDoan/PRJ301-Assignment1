@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -6,38 +7,43 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Production Plan List</title>
     </head>
+
     <body>
-        <h2>Production Plan List</h2>
+        <h1>Danh sách Kế hoạch Sản xuất</h1>
         <table border="1px">
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Quantity</th>
-                <th>Product</th>
-                <th>Estimation</th>
-                <th>Delete</th>
+                <td style="font-weight: bold">ID</td>
+                <td style="font-weight: bold">Tên kế hoạch</td>
+                <td style="font-weight: bold">Ngày bắt đầu</td>
+                <td style="font-weight: bold">Ngày kết thúc</td>
+                <td style="font-weight: bold">Số lượng</td>
+                <td style="font-weight: bold">Tên sản phẩm</td>
+                <td style="font-weight: bold">Dự toán</td>
             </tr>
-            <c:forEach var="planHeader" items="${productionPlans}">
-                <tr>
-                    
-                    <td>${planHeader.plan.id}</td>
-                    <td><a href="details.jsp?pid=${planHeader.plan.id}">${planHeader.plan.name}</a></td>
-                    <td>${planHeader.plan.start}</td>
-                    <td>${planHeader.plan.end}</td>
-                    <td>${planHeader.quantity}</td>
-                    <td>${planHeader.product.name}</td>
-                    <td>${planHeader.estimatedeffort}</td>
 
-                    <td>
-                        <form action="deletePlan" method="post" style="display:inline;">
-                            <input type="hidden" name="planId" value="${planHeader.id}">
-                            <button type="submit" class="delete-button">Delete</button>
-                        </form>
-                    </td>
+            <c:forEach items="${requestScope.plans}" var="p">
+                <tr class="even">
+                    <td rowspan="${p.headers.size()}">${p.id}</td>
+                    <td rowspan="${p.headers.size()}"><a href="detail?plid=${p.id}">${p.name}</a></td>
+                    <td rowspan="${p.headers.size()}">${p.start}</td>
+                    <td rowspan="${p.headers.size()}">${p.end}</td>
+                    <td>${p.headers[0].quantity}<br/></td>
+                    <td>${p.headers[0].product.name}<br/></td>
+                    <td>${p.headers[0].estimatedeffort}<br/></td>
+
                 </tr>
+                <c:forEach var="i" begin="1" end="${p.headers.size()-1}">
+                    <tr>
+                        <td>${p.headers[i].quantity}<br/></td>
+                        <td>${p.headers[i].product.name}<br/></td>
+                        <td>${p.headers[i].estimatedeffort}<br/></td>
+                    </tr>
+                </c:forEach>
             </c:forEach>
         </table>
     </body>
+
+
+
+
 </html>

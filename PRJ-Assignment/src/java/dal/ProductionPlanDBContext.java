@@ -11,6 +11,7 @@ import model.Department;
 import model.Employee;
 import model.ProductionPlanHeader;
 import model.Product;
+import model.Product;
 import model.ProductionPlan;
 import model.Salary;
 
@@ -104,12 +105,65 @@ public class ProductionPlanDBContext extends DBContext<ProductionPlan> {
 
     @Override
     public ArrayList<ProductionPlan> list() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<ProductionPlan> plans = new ArrayList<>();
+        ArrayList<ProductionPlanHeader> headers = new ArrayList<>();
 
+        PreparedStatement stm = null;
+        String sql = "select p.plid, plname,startdate,enddate,did,pr.pid,pname,quantity,estimatedeffort\n"
+                + "from Plans p join PlanHeaders  h on p.plid=h.plid\n"
+                + "join Products pr on pr.pid=h.pid";
+        try {
+
+            stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            ProductionPlan cPlan = new ProductionPlan();
+            cPlan.setId(-1);
+            while (rs.next()) {
+                int plid = rs.getInt("plid");
+                if (plid != cPlan.getId()) {
+                    cPlan = new ProductionPlan();
+                    cPlan.setId(plid);
+                    cPlan.setName(rs.getString("plname"));
+                    cPlan.setStart(rs.getDate("startdate"));
+                    cPlan.setEnd(rs.getDate("enddate"));
+                    plans.add(cPlan);
+
+                    Department d = new Department();
+                    d.setId(rs.getInt("did"));
+                    cPlan.setDept(d);
+                    headers = new ArrayList<>();
+
+                }
+
+                Product p = new Product();
+                p.setId(rs.getInt("pid"));
+                p.setName(rs.getString("pname"));
+
+                ProductionPlanHeader h = new ProductionPlanHeader();
+                h.setProduct(p);
+                h.setQuantity(rs.getInt("quantity"));
+                h.setEstimatedeffort(rs.getFloat("estimatedeffort"));
+                headers.add(h);
+                cPlan.setHeaders(headers);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductionPlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                stm.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductionPlanDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return plans;
     }
 
     @Override
-    public ProductionPlan get(int id) {
+    public ProductionPlan get(int id
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
