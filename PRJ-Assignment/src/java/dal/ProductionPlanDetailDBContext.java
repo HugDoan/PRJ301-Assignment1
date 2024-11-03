@@ -23,9 +23,6 @@ import model.ProductionPlanHeader;
 /**
  *
  * @author Admin
- *//**
- *
- * @author Admin
  */
 
 public class ProductionPlanDetailDBContext extends DBContext<ProductionPlanDetail> {
