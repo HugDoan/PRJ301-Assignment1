@@ -1,5 +1,6 @@
 package controller.productionplan;
 
+import controller.auth.BaseRBACController;
 import dal.ProductDBContext;
 import dal.ProductionPlanDBContext;
 import dal.ProductionPlanDetailDBContext;
@@ -17,17 +18,52 @@ import model.Product;
 import model.ProductionPlanDetail;
 import model.ProductionPlanHeader;
 import model.Shift;
+import model.auth.User;
 
 /**
  *
  * @author Admin
  */
-public class ProductionPlanDetailController extends HttpServlet {
+public class ProductionPlanDetailController extends BaseRBACController {
+
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+    protected void doAuthorizedPost(HttpServletRequest request, HttpServletResponse response, User account) throws ServletException, IOException {
+        String[] dates = request.getParameterValues("date");
+        ProductionPlanDetailDBContext dbDetail = new ProductionPlanDetailDBContext();
+        for (String d : dates) {
+
+            String[] hids = request.getParameterValues("hid" + d);
+            String[] sids = request.getParameterValues("sid" + d);
+            for (String s : sids) {
+                for (String h : hids) {
+
+                    String raw_quantity = request.getParameter("quantity" + h + s + d);
+                    if (raw_quantity != null && !raw_quantity.isEmpty()) {
+                        ProductionPlanDetail detail = new ProductionPlanDetail();
+                        int hid = Integer.parseInt(h);
+                        Date date = Date.valueOf(d);
+                        int sid = Integer.parseInt(s);
+                        int quantity = Integer.parseInt(raw_quantity);
+                        detail.setSid(sid);
+                        
+                        ProductionPlanHeader header = new ProductionPlanHeader();
+                        header.setId(hid);
+                        detail.setHeader(header);
+                        detail.setDate(date);
+                        detail.setQuantity(quantity);
+                        dbDetail.insert(detail);    
+                    }
+
+                }
+            }
+        }
+        response.sendRedirect("list");
+
+    }
+
+    @Override
+    protected void doAuthorizedGet(HttpServletRequest request, HttpServletResponse response, User account) throws ServletException, IOException {
         int plid = Integer.parseInt(request.getParameter("plid"));
         ProductionPlan plan = new ProductionPlan();
         
@@ -57,44 +93,5 @@ public class ProductionPlanDetailController extends HttpServlet {
 
         request.setAttribute("plan", plan);
         request.getRequestDispatcher("../view/productionplan/listdetail.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String[] dates = request.getParameterValues("date");
-        ProductionPlanDetailDBContext dbDetail = new ProductionPlanDetailDBContext();
-        for (String d : dates) {
-
-            String[] hids = request.getParameterValues("hid" + d);
-            String[] sids = request.getParameterValues("sid" + d);
-            for (String s : sids) {
-                for (String h : hids) {
-
-                    String raw_quantity = request.getParameter("quantity" + h + s + d);
-                    if (raw_quantity != null && !raw_quantity.isEmpty()) {
-                        ProductionPlanDetail detail = new ProductionPlanDetail();
-                        int hid = Integer.parseInt(h);
-                        Date date = Date.valueOf(d);
-                        int sid = Integer.parseInt(s);
-                        int quantity = Integer.parseInt(raw_quantity);
-                        detail.setSid(sid);
-                        
-                        ProductionPlanHeader header = new ProductionPlanHeader();
-                        header.setId(hid);
-                        detail.setHeader(header);
-                        detail.setDate(date);
-                        detail.setQuantity(quantity);
-                        
-                        dbDetail.insert(detail);    
-                    }
-
-                }
-
-            }
-
-        }
-        response.sendRedirect("list");
-
     }
 }
