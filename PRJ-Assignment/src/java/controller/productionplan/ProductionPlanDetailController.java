@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.ProductionPlan;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import model.Product;
 import model.ProductionPlanDetail;
 import model.ProductionPlanHeader;
@@ -25,7 +26,6 @@ import model.auth.User;
  * @author Admin
  */
 public class ProductionPlanDetailController extends BaseRBACController {
-
 
     @Override
     protected void doAuthorizedPost(HttpServletRequest request, HttpServletResponse response, User account) throws ServletException, IOException {
@@ -46,13 +46,13 @@ public class ProductionPlanDetailController extends BaseRBACController {
                         int sid = Integer.parseInt(s);
                         int quantity = Integer.parseInt(raw_quantity);
                         detail.setSid(sid);
-                        
+
                         ProductionPlanHeader header = new ProductionPlanHeader();
                         header.setId(hid);
                         detail.setHeader(header);
                         detail.setDate(date);
                         detail.setQuantity(quantity);
-                        dbDetail.insert(detail);    
+                        dbDetail.insert(detail);
                     }
 
                 }
@@ -66,17 +66,19 @@ public class ProductionPlanDetailController extends BaseRBACController {
     protected void doAuthorizedGet(HttpServletRequest request, HttpServletResponse response, User account) throws ServletException, IOException {
         int plid = Integer.parseInt(request.getParameter("plid"));
         ProductionPlan plan = new ProductionPlan();
-        
+
         ProductionPlanDBContext dbPlan = new ProductionPlanDBContext();
         plan = dbPlan.get(plid);
-        ArrayList<Date> datePlan = new ArrayList<>();
-        Date start = plan.getStart();
-        Date end = plan.getEnd();
-        long milisecondsinDay = 24 * 60 * 60 * 1000;
+        ArrayList<java.sql.Date> datePlan = new ArrayList<>();
+        java.sql.Date start = plan.getStart();
+        java.sql.Date end = plan.getEnd();
+        Calendar calendar = Calendar.getInstance();
 
         while (!start.after(end)) {
-            datePlan.add(start);
-            start = new Date(milisecondsinDay + start.getTime());
+            datePlan.add(new java.sql.Date(start.getTime())); // Thêm một bản sao của start vào danh sách
+            calendar.setTime(start);                          // Đặt thời gian của calendar bằng start
+            calendar.add(Calendar.DATE, 1);                   // Tăng thêm 1 ngày
+            start = new java.sql.Date(calendar.getTimeInMillis()); // Cập nhật lại giá trị cho start
         }
 
         ArrayList<Shift> shifts = new ArrayList<>();
